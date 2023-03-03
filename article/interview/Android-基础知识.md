@@ -54,7 +54,7 @@ Activity 生命周期各种回调方法的设计，是为了确保提供一个�
 - onPause
 - onStop
 
-### Activity 的 Launch mode（启动模式）以及使用场景 
+### Activity 的 Launch mode（启动模式）以及使用场景
 
 ----------
 
@@ -194,7 +194,7 @@ Activity 像一个工匠（控制单元），Window 像窗户（承载模型）�
 
 在 Activity 中调用 attach()，创建了一个 Window，创建的 window 是其子类 PhoneWindow，在 attach 中创建 PhoneWindow。在 Activity 中调用 setContentView(R.layout.xxx)，其中实际上是调用的 getWindow().setContentView()。调用 PhoneWindow 中的 setContentView() 方法。
 
-创建 ParentView： 作为 ViewGroup 的子类，实际是创建的 DecorView(作为 FrameLayout 的子类）。将指定的 R.layout.xxx 进行填充，通过布局填充器进行填充(其中的 parent 指的就是 DecorView)。调用到 ViewGroup，调用 ViewGroup 的 removeAllView()，先将所有的view移除掉，添加新的 view.addView()。
+创建 ParentView：作为 ViewGroup 的子类，实际是创建的 DecorView(作为 FrameLayout 的子类）。将指定的 R.layout.xxx 进行填充，通过布局填充器进行填充(其中的 parent 指的就是 DecorView)。调用到 ViewGroup，调用 ViewGroup 的 removeAllView()，先将所有的view移除掉，添加新的 view.addView()。
 
 ### Fragment 特点
 
@@ -262,8 +262,8 @@ AsyncTask 是对 Handler 与线程池的封装。使用它的方便之处在于�
 AsyncTask的优点在于执行完后台任务后可以很方便的更新UI，然而使用它存在着诸多的限制。先抛开内存泄漏问题，使用AsyncTask主要存在以下局限性：
 
 1. 在 Android 4.1 版本之前，AsyncTask 类必须在主线程中加载，这意味着对 AsyncTask 类的第一次访问必须发生在主线程中；在 Android 4.1 以及以上版本则不存在这一限制，因 为ActivityThread（代表了主线程）的 main 方法中会自动加载 AsyncTask。
-2. AsyncTask 对象必须在主线程中创建 
-3. AsyncTask 对象的 execute 方法必须在主线程中调用 
+2. AsyncTask 对象必须在主线程中创建
+3. AsyncTask 对象的 execute 方法必须在主线程中调用
 4. 一个 AsyncTask 对象只能调用一次 execute 方法
 
 
@@ -305,12 +305,12 @@ AsyncTask的优点在于执行完后台任务后可以很方便的更新UI，然
 	1. 使用 LruCache 进行内存缓存。
 	2. 使用 DiskLruCache 进行硬盘缓存。
 	3. 实现一个 ImageLoader 的流程：同步异步加载、图片压缩、内存硬盘缓存、网络拉取
-	
+
 		- 同步加载只创建一个线程然后按照顺序进行图片加载
 		- 异步加载使用线程池，让存在的加载任务都处于不同线程
 		- 为了不开启过多的异步任务，只在列表静止的时候开启图片加载
 
-		
+
 ### 图片加载原理
 
 ----------
@@ -353,12 +353,12 @@ http://blog.csdn.net/newchenxf/article/details/51693753
 
 -------
 
-Dalvik 和标准 Java虚拟机（JVM）之间的首要差别之一，就是 Dalvik 基于寄存器，而 JVM 基于栈。 
-Dalvik 和 Java 之间的另外一大区别就是运行环境 —— Dalvik 经过优化，允许在有限的内存中同时运行多个虚拟机的实例，并且每一个 Dalvik 应用作为一个独立的 Linux 进程执行。 
+Dalvik 和标准 Java虚拟机（JVM）之间的首要差别之一，就是 Dalvik 基于寄存器，而 JVM 基于栈。
+Dalvik 和 Java 之间的另外一大区别就是运行环境 —— Dalvik 经过优化，允许在有限的内存中同时运行多个虚拟机的实例，并且每一个 Dalvik 应用作为一个独立的 Linux 进程执行。
 
-1. 虚拟机很小，使用的空间也小； 
-2. Dalvik 没有 JIT 编译器； 
-3. 常量池已被修改为只使用 32 位的索引，以简化解释器； 
+1. 虚拟机很小，使用的空间也小；
+2. Dalvik 没有 JIT 编译器；
+3. 常量池已被修改为只使用 32 位的索引，以简化解释器；
 4. 它使用自己的字节码，而非 Java 字节码。
 
 
@@ -503,27 +503,27 @@ http://blog.csdn.net/ljx19900116/article/details/50037627
 
 ```Java
 public View getView(int position, View convertView, ViewGroup parent) {
-    View view = new Xxx(...); 
-    ... ... 
-    return view; 
-} 
+    View view = new Xxx(...);
+    ... ...
+    return view;
+}
 ```
 
 修正示例代码：
 
 ```Java
 public View getView(int position, View convertView, ViewGroup parent) {
-    View view = null; 
-    if (convertView != null) { 
-        view = convertView; 
-        populate(view, getItem(position)); 
-        ... 
-    } else { 
-        view = new Xxx(...); 
-        ... 
-    } 
-    return view; 
-} 
+    View view = null;
+    if (convertView != null) {
+        view = convertView;
+        populate(view, getItem(position));
+        ...
+    } else {
+        view = new Xxx(...);
+        ...
+    }
+    return view;
+}
 ```
 
 - Bitmap 对象不在使用时调用 recycle() 释放内存
